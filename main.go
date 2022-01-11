@@ -1,12 +1,7 @@
 package main
 
+import "log"
+
 func main() {
-	//cards := newDeck()
-	//hand, theDeck := deal(cards, 4)
-	//hand.printDeck()
-	//theDeck.printDeck()
-	//cards.saveToFile("cards")
-	cards := readFromFile("cards")
-	cards.shuffleDeck()
-	cards.printDeck()
+	log.Fatal("Check Branches.")
 }
