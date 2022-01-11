@@ -1,7 +1,6 @@
 package main
 
-import "log"
-
 func main() {
-	log.Fatal("Check Branches.")
+	n := newNumbers(11)
+	n.considerAndPrintOddOrOven()
 }
