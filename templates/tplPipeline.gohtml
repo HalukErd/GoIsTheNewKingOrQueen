@@ -5,8 +5,14 @@
     <title>Hello World</title>
 </head>
 <body>
-	{{range .}}
-	<li>{{.}}</li>
-	{{end}}
+<ul>
+	{{.}}
+
+	{{. | fdbl}}
+
+	{{. | fdbl | fsq}}
+
+	{{. | fdbl | fsq | fsqrt}}
+</ul>
 </body>
 </html>

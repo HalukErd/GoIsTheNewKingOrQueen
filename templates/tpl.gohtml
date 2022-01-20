@@ -5,7 +5,14 @@
     <title>Hello World</title>
 </head>
 <body>
-	{{$wisdom := .}}
-	<h1>{{$wisdom}}</h1>
+<ul>
+    {{range $_, $h := .Houses}}
+        <li>{{uc $h.Name}} - {{uc $h.Mark}}</li>
+    {{end}}
+
+    {{range .ValyrianSwords}}
+        <li>{{ft .Name}} - {{ft .Owner}}</li>
+    {{end}}
+</ul>
 </body>
 </html>

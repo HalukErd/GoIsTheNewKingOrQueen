@@ -1,30 +1,23 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"log"
+	"math"
 	"os"
 	"strings"
 	"text/template"
+	"time"
 )
 
 var tpl *template.Template
 
-func main() {
-	//func1()
-	//func2()
-	//func3()
-	//func4()
-	//func5()
-	//func6()
-	//func7()
-	//func8()
-	func9()
-}
-
-func init() {
-	tpl = template.Must(template.ParseGlob("templates/*"))
+var fm = template.FuncMap{
+	"uc":    strings.ToUpper,
+	"ft":    firstThree,
+	"fhdeu": timeAndDateEuropeFormat,
+	"fsqrt": sqrt,
+	"fdbl":  double,
+	"fsq":   square,
 }
 
 type house struct {
@@ -36,7 +29,60 @@ type valyrianSword struct {
 	Owner string
 }
 
-func func9() {
+func main() {
+	//func1()
+	func2()
+	func3()
+
+}
+
+func init() {
+	tpl = template.Must(template.New("").Funcs(fm).ParseGlob("templates/*"))
+	//tpl = template.Must(template.ParseFiles("templates/*")) // ERROR
+	//tpl.Funcs(fm)
+}
+
+func firstThree(s string) string {
+	s = strings.TrimSpace(s)
+	s = s[:3]
+	return s
+}
+
+func timeAndDateEuropeFormat(t time.Time) string {
+	return t.Format("03:04:05 02/01/2006")
+}
+
+func sqrt(x float64) float64 {
+	return math.Sqrt(float64(x))
+}
+
+func square(x int) float64 {
+	return math.Pow(float64(x), 2)
+}
+
+func double(x int) int {
+	return x * 2
+}
+
+func func3() {
+	err := tpl.ExecuteTemplate(os.Stdout, "tplPipeline.gohtml", 6)
+	if err != nil {
+		log.Fatalln(err)
+	}
+}
+
+func func2() {
+	//t := time.Now()
+	//fmt.Println(t)
+	//tf := t.Format("03:04/05 02&01-2006")
+	//fmt.Println(tf)
+	err := tpl.ExecuteTemplate(os.Stdout, "tplDate.gohtml", time.Now())
+	if err != nil {
+		log.Fatalln(err)
+	}
+}
+
+func func1() {
 	l := house{
 		Name: "Lannister",
 		Mark: "Lion",
@@ -73,142 +119,8 @@ func func9() {
 		[]valyrianSword{ww, ok, lc},
 	}
 
-	err := tpl.ExecuteTemplate(os.Stdout, "tplStructSlice.gohtml", data)
+	err := tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", data)
 	if err != nil {
 		log.Fatalln(err)
 	}
-}
-
-func func8() {
-	data := house{
-		Name: "Lannister",
-		Mark: "Lion",
-	}
-	err := tpl.ExecuteTemplate(os.Stdout, "tplStruct.gohtml", data)
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
-func func7() {
-	data := map[string]string{
-		"Lannisters": "Lion",
-		"Stark":      "DireWolf",
-		"Targaryen":  "Dragon",
-		"Baratheon":  "Stag",
-	}
-	err := tpl.ExecuteTemplate(os.Stdout, "tplMap.gohtml", data)
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-func func6() {
-	data := []string{"This", "is", "passing", "data", "as a slice"}
-	err := tpl.ExecuteTemplate(os.Stdout, "tplSlice.gohtml", data)
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
-func func5() {
-	err := tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", 42)
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
-func func4() {
-	t, err := template.ParseFiles("templates/one.gohtml")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	err = t.Execute(os.Stdout, nil)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	t, err = t.ParseFiles("templates/two.gohtml", "templates/vespa.gohtml")
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	err = t.ExecuteTemplate(os.Stdout, "two.gohtml", nil)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	err = t.ExecuteTemplate(os.Stdout, "vespa.gohtml", nil)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	err = t.ExecuteTemplate(os.Stdout, "one.gohtml", nil)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	err = t.Execute(os.Stdout, nil)
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
-func func3() {
-	t, err := template.ParseFiles("templates/text.gohtml")
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	nf, errCrt := os.Create("index.html")
-	if errCrt != nil {
-		log.Fatalln(errCrt)
-	}
-
-	err = t.Execute(nf, nil)
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
-func func2() {
-	name := os.Args[1]
-	fmt.Println(os.Args[0])
-	fmt.Println(os.Args[1])
-
-	html := `<!DOCTYPE html>
-			<html lang="en">
-			<head>
-			<meta charset="UTF-8"/>
-			<title>Hello World</title>
-			</head>
-			<body>
-			<h1>` + name + `</h1>
-			</body>
-			</html>`
-
-	nf, err := os.Create("index.html")
-	if err != nil {
-		log.Fatalln("Error creating file.", err)
-		os.Exit(1)
-	}
-	defer nf.Close()
-
-	io.Copy(nf, strings.NewReader(html))
-}
-
-func func1() {
-	name := "Haluk Erd"
-
-	html := `<!DOCTYPE html>
-			<html lang="en">
-			<head>
-			<meta charset="UTF-8"/>
-			<title>Hello World</title>
-			</head>
-			<body>
-			<h1>` + name + `</h1>
-			</body>
-			</html>`
-	fmt.Println(html)
-	// go run main.go > index.html
 }

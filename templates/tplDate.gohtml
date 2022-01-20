@@ -5,10 +5,10 @@
     <title>Hello World</title>
 </head>
 <body>
-	<ul>
-		{{$n := .Name}}
-		{{$m := .Mark}}
-		<li>{{$n}} - {{$m}}</li>
-	</ul>
+<ul>
+	Without Formatting: {{.}}
+
+	With Formatting {{. | fhdeu}}
+</ul>
 </body>
 </html>
