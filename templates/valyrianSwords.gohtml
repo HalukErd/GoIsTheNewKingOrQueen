@@ -1,0 +1,8 @@
+{{define "valyrianSwords"}}
+    <h1>Valyrian Swords And Owners</h1>
+    <ul>
+        {{range $_, $h := .}}
+            <li>{{uc $h.Name}} - {{uc $h.Owner}}</li>
+        {{end}}
+    </ul>
+{{end}}

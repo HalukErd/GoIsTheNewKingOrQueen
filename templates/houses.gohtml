@@ -1,0 +1,8 @@
+{{define "houseMark"}}
+    <h1>Houses And Marks</h1>
+    <ul>
+        {{range $_, $h := .}}
+            <li>{{uc $h.Name}} - {{uc $h.Mark}}</li>
+        {{end}}
+    </ul>
+{{end}}
