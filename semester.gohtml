@@ -1,0 +1,6 @@
+{{define "semester"}}
+        Semester: {{.Term}}
+    {{range .Courses}}
+            Course: {{.Number}} - {{.Name}} - {{.Units}}
+    {{end}}
+{{end}}
