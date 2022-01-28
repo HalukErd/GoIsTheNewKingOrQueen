@@ -5,14 +5,32 @@
         <title>HttpAndTemplate</title>
     </head>
     <body>
-        {{if .}}
-            {{range $key, $value := .}}
-                <p><strong>key: {{$key}}</strong></p>
-                <ul>{{range $value}}
+        Request Method: {{.Method}}
+        Url: {{.Url}}
+        Host: {{.Host}}
+        ContentLength: {{.ContentLength}}
+
+        <p><strong>Submissions:</strong></p>
+        {{if .Submissions}}
+            {{range $k, $v := .Submissions}}
+                <p>key: {{$k}}</p>
+                <ul>{{range $v}}
+                        <li>value:{{.}}</li>
+                    {{end}}</ul>
+            {{end}}
+        {{end}}
+
+        <p><strong>Header:</strong></p>
+        {{if .Header}}
+            {{range $k, $v := .Header}}
+                <p>key: {{$k}}</p>
+                <ul>{{range $v}}
                     <li>value:{{.}}</li>
                 {{end}}</ul>
             {{end}}
         {{end}}
+
+
 
         <form action="/?fname=Mel" id="simpleForm" method="POST">
             <input type="text" id="fname" name="fname"/>

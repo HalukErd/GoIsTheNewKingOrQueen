@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"net/url"
 	"text/template"
 )
 
@@ -15,8 +16,25 @@ func (h hndlr) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	w.Header().Set("H-Authorization", "Bearer Polar Bear")
+	w.Header().Set("content-type", "text/html")
+	data := struct {
+		Method        string
+		Url           *url.URL
+		Submissions   url.Values
+		Header        http.Header
+		Host          string
+		ContentLength int64
+	}{
+		Method:        req.Method,
+		Url:           req.URL,
+		Submissions:   req.Form,
+		Header:        req.Header,
+		Host:          req.Host,
+		ContentLength: req.ContentLength,
+	}
 
-	tpl.ExecuteTemplate(w, "index.gohtml", req.Form)
+	tpl.ExecuteTemplate(w, "index.gohtml", data)
 
 }
 
