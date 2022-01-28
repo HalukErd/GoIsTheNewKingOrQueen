@@ -20,8 +20,8 @@ func signup(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 
-	http.HandleFunc("/login", login)
-	http.HandleFunc("/register", signup)
+	http.Handle("/login", http.HandlerFunc(login))
+	http.Handle("/register", http.HandlerFunc(signup))
 
 	http.ListenAndServe(":8080", nil)
 }
