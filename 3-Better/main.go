@@ -19,9 +19,10 @@ func signup(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	mux := http.NewServeMux()
 
-	http.HandleFunc("/login", login)
-	http.HandleFunc("/register", signup)
+	mux.HandleFunc("/login", login)
+	mux.HandleFunc("/register", signup)
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8080", mux)
 }
