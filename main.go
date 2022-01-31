@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+var m = make(map[string]int)
+
 func main() {
 	http.HandleFunc("/", foo)
 	http.HandleFunc("/check", checkCuk)
@@ -18,16 +20,17 @@ func main() {
 func foo(w http.ResponseWriter, req *http.Request) {
 	cukie := &http.Cookie{
 		Name:  "H-Auth",
-		Value: "Bearer Polar Bear",
+		Value: req.RemoteAddr,
 		Path:  "/",
 	}
 	http.SetCookie(w, cukie)
 	fmt.Println("New Cookie Created:", cukie)
-	fmt.Fprintln(w, "Your Cookie:", cukie)
+	fmt.Fprintln(w, "Your Count:", cukie)
 }
 
 func checkCuk(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := r.Cookie("H-Auth")
+	m[cookie.Value] = m[cookie.Value] + 1
 	fmt.Println("Cookie From Req:", cookie)
-	fmt.Fprintln(w, "Your Cookie:", cookie)
+	fmt.Fprintln(w, "Your Count:", m[cookie.Value])
 }
