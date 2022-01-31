@@ -28,8 +28,16 @@ func foo(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintln(w, "Your Count:", cukie)
 }
 
-func checkCuk(w http.ResponseWriter, r *http.Request) {
-	cookie, _ := r.Cookie("H-Auth")
+func checkCuk(w http.ResponseWriter, req *http.Request) {
+	cookie, err := req.Cookie("H-Auth")
+	if err == http.ErrNoCookie {
+		cukie := &http.Cookie{
+			Name:  "H-Auth",
+			Value: req.RemoteAddr,
+			Path:  "/",
+		}
+		http.SetCookie(w, cukie)
+	}
 	m[cookie.Value] = m[cookie.Value] + 1
 	fmt.Println("Cookie From Req:", cookie)
 	fmt.Fprintln(w, "Your Count:", m[cookie.Value])
