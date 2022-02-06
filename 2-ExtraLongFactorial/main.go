@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+	"math/big"
 )
 
 func extraLongFactorials(n int32) {
 
-	//theBig := big.NewInt(int64(1))
-	//for i := 2; int32(i) <= n; i++ {
-	//	theBig.Mul(theBig, big.NewInt(int64(i)))
-	//}
-	//fmt.Printf("%v", theBig)
+	theBig := big.NewInt(int64(1))
+	for i := 2; int32(i) <= n; i++ {
+		theBig.Mul(theBig, big.NewInt(int64(i)))
+	}
+	fmt.Printf("%v", theBig)
 
 	nines := make([]int64, 1, 100)
 	nines[0] = 1
