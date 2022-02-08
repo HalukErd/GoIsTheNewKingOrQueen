@@ -5,9 +5,9 @@ For example:
 "1+22*(3+1)(35-(33*2)+33)-2*(3)"
 ```
 
-Firstly edits transforms
-* )(  puts * for hidden * operation it becomes like that ---> )*(
-* ( puts given str in brackets )
+Firstly edits
+* puts * for hidden * operation, it becomes like that  )( ---> )*(
+* puts given str in brackets, it becomes like that str ---> (str)
 * and by changing - to +- removes - operation
 
 After transformation it is like that:
