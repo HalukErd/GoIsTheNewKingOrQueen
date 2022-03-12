@@ -31,8 +31,6 @@ func main() {
 	go printShapeInfo(c)
 	go printShapeInfo(t)
 	wg.Wait()
-	wg.Wait()
-	wg.Wait()
 	//printArea(r)
 	//printArea(c)
 	//printArea(t)
